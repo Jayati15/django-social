@@ -15,6 +15,9 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path,include
+from django.conf.urls import url
+from django.views.static import serve
+
 from .import views
 
 urlpatterns = [
@@ -25,7 +28,10 @@ urlpatterns = [
     path('loginsuccess/',views.LoginSuccessPage.as_view(),name="loginsuccess"),
     path('logoutsuccess/',views.LogoutSuccessPage.as_view(),name="logoutsuccess"),
     path('posts/',include('posts.urls',namespace='posts')),
-    path('groups/',include('groups.urls',namespace='groups'))
+    path('groups/',include('groups.urls',namespace='groups')),
+    
+    url(r'^media/(?P<path>.*)$', serve,{'document_root':       settings.MEDIA_ROOT}), 
+    url(r'^static/(?P<path>.*)$', serve,{'document_root': settings.STATIC_ROOT}), 
     
     
 ] 
